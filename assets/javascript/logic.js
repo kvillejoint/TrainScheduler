@@ -1,13 +1,12 @@
-  // Initialize Firebase
+// Initialize Firebase
   var config = {
-      apiKey: "AIzaSyCkGgPgVIfZIrkR-KzAeC8Cm5ySiS0DqIw",
-      authDomain: "test-project-51a8d.firebaseapp.com",
-      databaseURL: "https://test-project-51a8d.firebaseio.com",
-      projectId: "test-project-51a8d",
-      storageBucket: "test-project-51a8d.appspot.com",
-      messagingSenderId: "1007707501042"
+    apiKey: "AIzaSyBvEiU0jb5KA1tcd5O2qUivXXw7l4Hp-0Q",
+    authDomain: "trainscheduler-29851.firebaseapp.com",
+    databaseURL: "https://trainscheduler-29851.firebaseio.com",
+    projectId: "trainscheduler-29851",
+    storageBucket: "trainscheduler-29851.appspot.com",
+    messagingSenderId: "449852379869"
   };
-  //Initialize firebase
   firebase.initializeApp(config);
   //variable for firebase
   var database = firebase.database();
@@ -60,7 +59,7 @@
       console.log(trainName);
       console.log(frequency);
       //Reformat/prettify the time info
-      var trainTimePretty = moment.uix(trainTime).format("HH:mm");
+      var trainTimePretty = moment(trainTime).format("HH:mm");
       //variable to calculate next arrival time
       var nextArrival = nowMoment.add(minutesAway, "minutes");
       var formatNextArrival = nextArrival.format("HH:mm");
@@ -75,5 +74,5 @@
       var minutesAway = frequency - minutesSinceLastArrival;
       console.log("Minutes away: " + minutesAway);
       //Add input data to table in HTML
-      $("#trains > tbody").append("<tr><td>" + trainName + "<tr><td>" + destination + "<tr><td>" + frequency "<tr><td>" + nextArrival + "<tr><td>" + minutesAway + "<tr><td>");
+      //$("#trains > tbody").append("<tr><td>" + trainName + "<tr><td>" + destination + "<tr><td>" + frequency "<tr><td>" + nextArrival + "<tr><td>" + minutesAway + "<tr><td>");
   	});
