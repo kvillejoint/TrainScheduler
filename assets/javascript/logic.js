@@ -52,12 +52,12 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     //Store everything into a variable
     var trainName = childSnapshot.val().train;
     var destination = childSnapshot.val().destination;
-    var trainTime = childSnapshot.val().time;
-    var frequency = childSnapshot.val().frequency;
+    var trainTime = parseInt(childSnapshot.val().time);
+    var frequency = parseInt(childSnapshot.val().frequency);
     //Check stored info
-    console.log("train time: " + trainName);
-    console.log("destination: " + destination);
     console.log("train name: " + trainName);
+    console.log("destination: " + destination);
+    console.log("train time: " + trainTime);
     console.log("frequency: " + frequency);
 
 
@@ -68,7 +68,12 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     var formatNextArrival = nextArrival.format("HH:mm");
     console.log("Next arrival: " + nextArrival);
     //variable to calculate minutes away (current time subtracted from trainTime - show in minutes)
-    var firstTrainTime = moment(firstTrainTime, 'HH:mm');
+    var firstTrainTime = moment(trainTime);
+    //change from unix to moment js time
+
+
+
+
     //variable for time now
     var timeNow = moment();
     console.log("current time: " + timeNow);
