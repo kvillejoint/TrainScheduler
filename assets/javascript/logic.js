@@ -45,6 +45,7 @@ $("#run-search").on("click", function(event) {
     $("#trainTrain").val("");
     $("#frequency").val("");
 
+    return false;
 });
 //Add firebase event to add employee data to database
 database.ref().on("child_added", function(childSnapshot, prevChildKey) {
@@ -60,31 +61,38 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     console.log("train time: " + trainTime);
     console.log("frequency: " + frequency);
 
-
     //Reformat the time info
-    var trainTimeReformat = moment(trainTime).format("HH:mm");
+    var trainTimeReformat = moment.unix(trainTime).format("HH:mm");
     //variable to calculate next arrival time
-    var nextArrival = moment().add(minutesAway, "minutes");
-    var formatNextArrival = nextArrival.format("HH:mm");
+    var nextArrival = moment().add(minutesAway, "minutes").format("HH:mm");
+
     console.log("Next arrival: " + nextArrival);
     //variable to calculate minutes away (current time subtracted from trainTime - show in minutes)
     var firstTrainTime = moment(trainTime);
+
+    /* Sample Code for changing unix timestamp into moment js time
     //change from unix to moment js time
-
-
-
+    const unixTimestamp = +new Date();
+    const exampleTime = moment.unix(unixTimestamp);
+    exampleTime.format('HH:mm')
+    */
 
     //variable for time now
-    var timeNow = moment();
+    var timeNow = moment().format("HH:mm");
     console.log("current time: " + timeNow);
     //variables to calculate math for minutes Away data
-    var minutesSinceFirstArrival = moment().diff(firstTrainTime, 'minutes');
+    var minutesSinceLastArrival = moment().diff(moment.unix(firstTrainTime), 'minutes') % frequency;
+
+    /* Original code for changing minutes away data - saved as reference. Revised version implemented above
+    //variables to calculate math for minutes Away data
+    var minutesSinceFirstArrival = moment().diff(moment.unix(firstTrainTime), 'minutes');
     //redefine variable
-    minutesSinceLastArrival = minutesSinceFirstArrival % frequency;
+    var minutesSinceLastArrival = minutesSinceFirstArrival % frequency;
+    */
+
     var minutesAway = frequency - minutesSinceLastArrival;
     console.log("Minutes away: " + minutesAway);
+
     //Add input data to table in HTML
-    $("#trains > tbody").append("<tr><td>" + trainName + "<td><td>" + destination + "<td><td>"
-    + frequency + "<td><td>" + nextArrival + "<td><td>" + minutesAway);
+    $("#trains > tbody").append("<tr><td>" + trainName + "<td><td>" + destination + "<td><td>" + frequency + "<td><td>" + nextArrival + "<td><td>" + minutesAway + "</td></tr>");
 });
-    
