@@ -18,7 +18,7 @@ var frequency = 0;
 var minutesSinceFirstArrival = 0;
 //button event for submit action
 $("#run-search").on("click", function(event) {
-    event.preventDefault();
+    event.preventDefault()
     //variales to pull user input from textbox
     var trainName = $("#trainName").val().trim();
     var destination = $("#destination").val().trim();
